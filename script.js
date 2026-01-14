@@ -48,7 +48,7 @@ const  entrada = ["Salário","Vale","Vendas", "Ubber"];
               let total =  valoresPorCategorias[dia].reduce((soma, valores)=> soma + valores,0)
                 const card = document.createElement('div');
                 card.className = 'cards';
-                card.innerHTML = `${dia}: ${formatter.format(total)}`
+                card.innerHTML = `<span>${dia}:</span>  <span>${formatter.format(total)}</span>`
                div.appendChild(card)
              }
             

@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle financerio</title>
+    <link rel="stylesheet" href="style02.css">
 </head>
- <link rel="stylesheet" href="style.css">
+ 
 <body>
-  <h1>Controle financeiro</h1>
+       
+      <h1>💰 Controle Financeiro</h1>
      
-  <div autocomplete="off" id="container">
+  <div id="container">
        <select id="movimentação">
-          <option value="entrada">Entradas</option>
-          <option value="saida">Saidas</option>
+          <option value="entrada">💰 Entradas</option>
+          <option value="saida">💸 Saidas</option>
        </select>
        <select  id="valores">
-            <option value="">Aguarde...</option>
+            <option value="">📂 Aguarde...</option>
        </select>
-       <input type="text" placeholder="R$ 0,00" id="input">
+       <input type="text" placeholder="💲 0,00" id="input">
        <button id="btn-adicionar">Adicionar</button>
   </div>
-    
-    <div class="divs" id="movimentções"><h2>Movimentações</h2></div>
+    <div class="container">
+          <div class="divs" id="movimentções"><h2>💸 Gastos</h2></div>
+          <div class="divs"><h2>💰 Rendas</h2>
+               <div class="card"><span>Salário:</span> R$ 2500,00</div>
+                <div class="card"><span>Vale:</span> R$ 3300,00</div>
+          
+          </div>
+   
+     </div>
 
     <script src="script.js"></script>
 </body>
