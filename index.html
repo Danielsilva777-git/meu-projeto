@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle financerio</title>
+</head>
+ <link rel="stylesheet" href="style.css">
+<body>
+  <h1>Controle financeiro</h1>
+     
+  <div autocomplete="off" id="container">
+       <select id="movimentação">
+          <option value="entrada">Entradas</option>
+          <option value="saida">Saidas</option>
+       </select>
+       <select  id="valores">
+            <option value="">Aguarde...</option>
+       </select>
+       <input type="text" placeholder="R$ 0,00" id="input">
+       <button id="btn-adicionar">Adicionar</button>
+  </div>
+    
+    <div class="divs" id="movimentções"><h2>Movimentações</h2></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
