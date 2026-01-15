@@ -75,6 +75,8 @@ select, input {
   border-radius: 12px;
   width: 300px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  height: 380px;
+  overflow: scroll;
 }
 
 .divs h2 {
