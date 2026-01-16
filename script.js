@@ -5,8 +5,6 @@ const btn_add = document.querySelector('#btn-adicionar');
 const input =  document.getElementById("input");
 const div = document.querySelector('.divs')
 
-const saida = ["Alimentação","Aluguel","Internet","cartão de crédito","Mercado"];
-const  entrada = ["Salário","Vale","Vendas", "Ubber"];
 
    movimentaçao.addEventListener('change', ()=>{
       const valor = movimentaçao.options[movimentaçao.selectedIndex].value
@@ -14,13 +12,25 @@ const  entrada = ["Salário","Vale","Vendas", "Ubber"];
    })
    btn_add.addEventListener('click', addvalores)
 
+     let categorias = {};
+     fetch("dados.json")
+     .then(response => response.json())
+     .then(data => {
+         categorias = data
+     })
+
+     .catch(err => console.error("Erro ao carregar o JSON", err))
+
  // identificando o valor selecionado no select de tipo de entrada
    function valor_selecionado(valor){
     //Limpando o select rendas_gastos
       rendas_gastos.innerHTML = ""
-      const tag = valor ==="saida" ? saida: entrada
       
-       tag.forEach(itens =>{
+          // const tag = valor === "saida" ? saida : entrada; antigo 
+
+      const lista = categorias[valor] // entra ou saída
+      
+       lista.forEach(itens =>{
             const option = new Option(itens,itens)
             rendas_gastos.appendChild(option)
        })

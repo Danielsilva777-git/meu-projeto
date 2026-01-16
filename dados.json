@@ -1,0 +1,16 @@
+
+{
+  "entrada": [
+    "Salário",
+    "Vale",
+    "Vendas",
+    "Uber"
+  ],
+  "saida": [
+    "Alimentação",
+    "Aluguel",
+    "Internet",
+    "Cartão de crédito",
+    "Mercado"
+  ]
+}
