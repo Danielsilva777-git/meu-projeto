@@ -8,23 +8,35 @@
 </head>
  
 <body>
-  <h1>Controle financeiro</h1>
-     
-  
-  <div autocomplete="off" id="container">
-       <select id="movimentação">
-          <option value="entrada">Entradas</option>
-          <option value="saida">Saidas</option>
-       </select>
-       <select  id="valores">
-            <option value="">Aguarde...</option>
-       </select>
-       <input type="text" placeholder="R$ 0,00" id="input">
-       <button id="btn-adicionar">Adicionar</button>
-  </div>
-    
-    <div class="divs" id="movimentções"><h2>Movimentações</h2></div>
+     <div class="container">
+         <div class="controle">
+                <h1>💰 Controle Financeiro</h1>
+             
+                <div class="linha">
+                     <select id="movimentação">
+                         <option value="entrada">💰 Entradas</option>
+                         <option value="saida">💸 Saidas</option>
+                     </select>
+                </div>
 
+               <div class="linha">
+                    <select  id="valores">
+                         <option value="">📂 Aguarde...</option>
+                    </select>
+               </div>
+               <div class="linha"><input type="number" placeholder="💲 0,00" id="input"></div>
+
+               <div class="botao"><button id="btn-adicionar">Adicionar</button></div>
+        
+          </div>
+         
+         <div class="tela" id="movimentções">
+               <h2>💸 Movimentações</h2>
+               <div class="divs"></div> 
+               <div class="resultado"></div>
+          </div>
+     </div>
+            
     <script src="script.js"></script>
 </body>
 </html>
