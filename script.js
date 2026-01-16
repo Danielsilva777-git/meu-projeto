@@ -5,7 +5,7 @@ const btn_add = document.querySelector('#btn-adicionar');
 const input =  document.getElementById("input");
 const div = document.querySelector('.divs')
 
-const saida = ["Alimentação","Aluguel","Internet","cartão de crédito"];
+const saida = ["Alimentação","Aluguel","Internet","cartão de crédito","Mercado"];
 const  entrada = ["Salário","Vale","Vendas", "Ubber"];
 
    movimentaçao.addEventListener('change', ()=>{

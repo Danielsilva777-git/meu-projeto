@@ -158,12 +158,14 @@ h2{
   input, select, .linha, .botao button {
    width: 100%;
 }
-h2, h1 {
+h2{
   display: none;
 }
 .tela, .divs{
     overflow:scroll;
     height: 90%;
 }
-
+h1{
+  font-size: 1.5rem;
+}
 }
