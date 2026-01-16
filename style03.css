@@ -152,16 +152,18 @@ h2{
     }
     .controle {
         border-right: none;
-        border-bottom: 2px solid #e5e5e5; 
+        border-bottom: 2px solid #e5e5e5;
+         
     }
   input, select, .linha, .botao button {
    width: 100%;
 }
-h2 {
+h2, h1 {
   display: none;
 }
 .tela, .divs{
     overflow:scroll;
     height: 90%;
 }
+
 }
