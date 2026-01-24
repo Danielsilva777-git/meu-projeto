@@ -52,20 +52,27 @@ const div = document.querySelector('.divs')
          
 
         if(valorInput !== 0 && key !== "" && !isNaN(valorInput)){  
+         
           if(!valoresPorCategorias[key]) valoresPorCategorias[key] = [];
               valoresPorCategorias[key].push(valorInput)
-             for(let dia in valoresPorCategorias){
+             
+              for(let dia in valoresPorCategorias){
               let total =  valoresPorCategorias[dia].reduce((soma, valores)=> soma + valores,0)
                 const card = document.createElement('div');
                 card.className = 'cards';
                 card.innerHTML = `<span>${dia}:</span>  <span>${formatter.format(total)}</span>`
                div.appendChild(card)
+               
              }
-            
+          
         }else{
           alert("Preechar os campos em branco")
           return
         }
+
+            input.value = "";
+            input.focus()
+
     }
     function remover(){
       
