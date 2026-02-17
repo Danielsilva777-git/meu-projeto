@@ -11,15 +11,24 @@ const div = document.querySelector('.divs')
        valor_selecionado(valor)
    })
    btn_add.addEventListener('click', addvalores)
+    let categorias = {};
 
-     let categorias = {};
-     fetch("dados.json")
-     .then(response => response.json())
-     .then(data => {
-         categorias = data
-     })
-
-     .catch(err => console.error("Erro ao carregar o JSON", err))
+   async function json(){
+     try{
+    
+     const resposta = await fetch("dados.json")
+     if(!resposta.ok){
+       throw new Error(`Erro: ${resposta.status}`)
+     }
+        
+       const dados = await resposta.json();
+        categorias = dados
+        
+          
+     }catch(erro){
+         console.log(`Arquivo json não encontrado ${erro}`)
+     }
+    }
 
  // identificando o valor selecionado no select de tipo de entrada
    function valor_selecionado(valor){
@@ -31,8 +40,7 @@ const div = document.querySelector('.divs')
       const lista = categorias[valor] // entra ou saída
       
        lista.forEach(itens =>{
-            const option = new Option(itens,itens)
-            rendas_gastos.appendChild(option)
+            rendas_gastos.appendChild(new Option(itens,itens))
        })
      
    }
@@ -77,5 +85,5 @@ const div = document.querySelector('.divs')
     function remover(){
       
     }
-
+       json();
 
