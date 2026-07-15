@@ -6,11 +6,11 @@ const input =  document.getElementById("input");
 const div = document.querySelector('.divs')
 
 
-   movimentaçao.addEventListener('change', ()=>{
-      const valor = movimentaçao.options[movimentaçao.selectedIndex].value
-       valor_selecionado(valor)
-   })
-   btn_add.addEventListener('click', addvalores)
+movimentaçao.addEventListener('change', () => {
+    const valor = movimentaçao.options[movimentaçao.selectedIndex].value;
+    valor_selecionado(valor);
+});
+// atualizar tela de entrada 
 
      let categorias = {};
      fetch("dados.json")
