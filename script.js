@@ -2,9 +2,11 @@
 const rendas_gastos = document.querySelector('#valores'); //Selector de entrada das categorias 
 const movimentaçao = document.querySelector('#movimentação');// selector de entradas e saidas
 const btn_add = document.querySelector('#btn-adicionar');
-const input =  document.getElementById("input");
-const div = document.querySelector('.divs')
+const input = document.getElementById("input");
+const div = document.querySelector('.divs');
+const resultado = document.querySelector('.resultado');
 
+const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
 movimentaçao.addEventListener('change', () => {
     const valor = movimentaçao.options[movimentaçao.selectedIndex].value;
@@ -12,63 +14,114 @@ movimentaçao.addEventListener('change', () => {
 });
 
 
-     let categorias = {};
-     fetch("dados.json")
-     .then(response => response.json())
-     .then(data => {
-         categorias = data
-     })
+btn_add.addEventListener('click', addvalores);
 
-     .catch(err => console.error("Erro ao carregar o JSON", err))
+let categorias = {};
 
- // identificando o valor selecionado no select de tipo de entrada
-   function valor_selecionado(valor){
-    //Limpando o select rendas_gastos
-      rendas_gastos.innerHTML = ""
-      
-          // const tag = valor === "saida" ? saida : entrada; antigo 
-
-      const lista = categorias[valor] // entra ou saída
-      
-       lista.forEach(itens =>{
-            const option = new Option(itens,itens)
-            rendas_gastos.appendChild(option)
-       })
-     
-   }
-    // criando objeto vazio
-   let valoresPorCategorias = {};
-
-   // Adicionando valores ao objeto
-  function addvalores(){
-      const key = rendas_gastos.value
-      const valorInput = Number(input.value);
-      const formatter = new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'})   
-      //Removendo todos os cards antes de adicionar outros 
-          document.querySelectorAll('.divs').forEach(itens => {
-         itens.querySelectorAll('.cards').forEach(card => card.remove())
-                                                                        
-        })
-         
-
-        if(valorInput !== 0 && key !== "" && !isNaN(valorInput)){  
-          if(!valoresPorCategorias[key]) valoresPorCategorias[key] = [];
-              valoresPorCategorias[key].push(valorInput)
-             for(let dia in valoresPorCategorias){
-              let total =  valoresPorCategorias[dia].reduce((soma, valores)=> soma + valores,0)
-                const card = document.createElement('div');
-                card.className = 'cards';
-                card.innerHTML = `<span>${dia}:</span>  <span>${formatter.format(total)}</span>`
-               div.appendChild(card)
-             }
-            
-        }else{
-          alert("Preechar os campos em branco")
-          return
+async function json() {
+    try {
+        const resposta = await fetch("dados.json");
+        if (!resposta.ok) {
+            throw new Error(`Erro: ${resposta.status}`);
         }
+        const dados = await resposta.json();
+        categorias = dados;
+    } catch (erro) {
+        console.log(`Arquivo json não encontrado ${erro}`);
     }
-    function remover(){
-      
+}
+
+// identificando o valor selecionado no select de tipo de entrada
+function valor_selecionado(valor) {
+    rendas_gastos.innerHTML = "";
+
+    const lista = categorias[valor]; // entrada ou saída
+    if (!lista) return;
+
+    lista.forEach(itens => {
+        rendas_gastos.appendChild(new Option(itens, itens));
+    });
+}
+
+// Lista de lançamentos: guarda categoria, valor E o tipo (entrada/saida)
+// -> isso é o que faltava para dar pra calcular o saldo depois
+let lancamentos = [];
+
+// salvar o array de lançamentos no localStorage
+function salvarDados(){
+  localStorage.setItem('lancamentos', JSON.stringify(lancamentos));
+}
+
+// Lê o localStorage e recupera os lançamentos salvos
+function carregarDados(){
+  const dadosSalvos = localStorage.getItem('lancamentos');
+  if(dadosSalvos){
+    lancamentos = JSON.parse(dadosSalvos);
+  }
+}
+
+function addvalores() {
+    const tipo = movimentaçao.value;       // "entrada" ou "saida"
+    const categoria = rendas_gastos.value;
+    const valorInput = Number(input.value);
+
+    if (valorInput !== 0 && categoria !== "" && !isNaN(valorInput)) {
+        lancamentos.push({ tipo, categoria, valor: valorInput });
+        salvarDados(); // salvar sempre que adicionar 
+        renderizarTela();
+    } else {
+        alert("Preencher os campos em branco");
+        return;
     }
 
+    input.value = "";
+    input.focus();
+}
 
+// Remonta os cards (agrupados por categoria) e recalcula o saldo total
+function renderizarTela() {
+    div.innerHTML = "";
+
+    const totaisPorCategoria = {};
+    lancamentos.forEach(({ categoria, valor }) => {
+        if (!totaisPorCategoria[categoria]) totaisPorCategoria[categoria] = 0;
+        totaisPorCategoria[categoria] += valor;
+    });
+
+    for (let categoria in totaisPorCategoria) {
+        const card = document.createElement('div');
+        card.className = 'cards';
+        card.innerHTML = `<span>${categoria}:</span> <span>${formatter.format(totaisPorCategoria[categoria])}</span>`;
+        div.appendChild(card);
+    }
+
+    const totalEntradas = lancamentos
+        .filter(l => l.tipo === "entrada")
+        .reduce((soma, l) => soma + l.valor, 0);
+
+    const totalSaidas = lancamentos
+        .filter(l => l.tipo === "saida")
+        .reduce((soma, l) => soma + l.valor, 0);
+
+    const saldo = totalEntradas - totalSaidas;
+
+    resultado.innerHTML = `
+        <p>Entradas: ${formatter.format(totalEntradas)}</p>
+        <p>Saídas: ${formatter.format(totalSaidas)}</p>
+        <p><strong>Saldo: ${formatter.format(saldo)}</strong></p>
+    `;
+}
+
+function remover() {
+
+}
+
+// Inicialização: carrega o JSON e já popula o select de categorias
+// com base no valor padrão do select de movimentação
+(async function iniciar() {
+    await json();
+    valor_selecionado(movimentaçao.value);
+    carregarDados(); // recupera lançamentos salvos
+    renderizarTela(); // Já mostra os cards e o saldo ao abrir 
+
+})();
