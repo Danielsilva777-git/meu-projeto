@@ -10,7 +10,7 @@ movimentaçao.addEventListener('change', () => {
     const valor = movimentaçao.options[movimentaçao.selectedIndex].value;
     valor_selecionado(valor);
 });
-// atualizar tela de entrada 
+
 
      let categorias = {};
      fetch("dados.json")
