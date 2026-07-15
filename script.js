@@ -11,24 +11,15 @@ const div = document.querySelector('.divs')
        valor_selecionado(valor)
    })
    btn_add.addEventListener('click', addvalores)
-    let categorias = {};
 
-   async function json(){
-     try{
-    
-     const resposta = await fetch("dados.json")
-     if(!resposta.ok){
-       throw new Error(`Erro: ${resposta.status}`)
-     }
-        
-       const dados = await resposta.json();
-        categorias = dados
-        
-          
-     }catch(erro){
-         console.log(`Arquivo json não encontrado ${erro}`)
-     }
-    }
+     let categorias = {};
+     fetch("dados.json")
+     .then(response => response.json())
+     .then(data => {
+         categorias = data
+     })
+
+     .catch(err => console.error("Erro ao carregar o JSON", err))
 
  // identificando o valor selecionado no select de tipo de entrada
    function valor_selecionado(valor){
@@ -40,7 +31,8 @@ const div = document.querySelector('.divs')
       const lista = categorias[valor] // entra ou saída
       
        lista.forEach(itens =>{
-            rendas_gastos.appendChild(new Option(itens,itens))
+            const option = new Option(itens,itens)
+            rendas_gastos.appendChild(option)
        })
      
    }
@@ -60,30 +52,23 @@ const div = document.querySelector('.divs')
          
 
         if(valorInput !== 0 && key !== "" && !isNaN(valorInput)){  
-         
           if(!valoresPorCategorias[key]) valoresPorCategorias[key] = [];
               valoresPorCategorias[key].push(valorInput)
-             
-              for(let dia in valoresPorCategorias){
+             for(let dia in valoresPorCategorias){
               let total =  valoresPorCategorias[dia].reduce((soma, valores)=> soma + valores,0)
                 const card = document.createElement('div');
                 card.className = 'cards';
                 card.innerHTML = `<span>${dia}:</span>  <span>${formatter.format(total)}</span>`
                div.appendChild(card)
-               
              }
-          
+            
         }else{
           alert("Preechar os campos em branco")
           return
         }
-
-            input.value = "";
-            input.focus()
-
     }
     function remover(){
       
     }
-       json();
+
 
