@@ -1,0 +1,1 @@
+const valor = "daniel"
