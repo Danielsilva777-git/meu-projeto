@@ -75,8 +75,11 @@ h2{
 }
 
 .botao {
-   margin-left: 20px;
+    margin-left: 20px;
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 .botao button {
   background-color: #78a7d6;
@@ -88,7 +91,7 @@ h2{
   font-size: 1.3em;
    transition: background-color 0.3s ease;
    border-radius: 16px;
-   width: 50%;
+   flex: 1,
 }
 
 .botao button:hover {
@@ -168,4 +171,90 @@ h2{
 h1{
   font-size: 1.5rem;
 }
+}
+/* Estilo para organizar o texto acima dos selects e inputs */
+.linha {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px; /* Espaçamento entre as linhas */
+}
+
+.linha label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #5f6264; /* Ajuste a cor conforme seu tema */
+}
+/* ==== Página de Lançamentos ==== */
+
+.pagina-lancamentos {
+    max-width: 650px;
+}
+
+.linha-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.linha-topo h1 {
+    margin-bottom: 0;
+}
+
+.link-voltar {
+    text-decoration: none;
+    color: #3946b8;
+    font-weight: bold;
+    background: #eef1ff;
+    padding: 8px 14px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.link-voltar:hover {
+    background: #dbe1ff;
+}
+
+.linha-lancamento {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8f860;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+}
+
+.linha-editando {
+    gap: 8px;
+    background: #eef1ff;
+}
+
+.linha-editando select,
+.linha-editando input {
+    font-size: 1em;
+    padding: 6px;
+}
+
+.acoes-lancamento {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-acao {
+    border: none;
+    background: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.15s ease;
+}
+
+.btn-acao:hover {
+    transform: scale(1.1);
 }

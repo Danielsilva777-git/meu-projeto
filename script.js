@@ -26,6 +26,7 @@ async function json() {
         }
         const dados = await resposta.json();
         categorias = dados;
+        
     } catch (erro) {
         console.log(`Arquivo json não encontrado ${erro}`);
     }
@@ -65,9 +66,10 @@ function addvalores() {
     const categoria = rendas_gastos.value;
     const valorInput = Number(input.value);
 
+    // obs na criaçao da chave valor, foi criada normal sem abreviação devido ela ser do tipo number
     if (valorInput !== 0 && categoria !== "" && !isNaN(valorInput)) {
         lancamentos.push({ tipo, categoria, valor: valorInput });
-        salvarDados(); // salvar sempre que adicionar 
+         salvarDados(); // salvar sempre que adicionar 
         renderizarTela();
     } else {
         alert("Preencher os campos em branco");
@@ -91,7 +93,7 @@ function renderizarTela() {
     for (let categoria in totaisPorCategoria) {
         const card = document.createElement('div');
         card.className = 'cards';
-        card.innerHTML = `<span>${categoria}:</span> <span>${formatter.format(totaisPorCategoria[categoria])}</span>`;
+        card.innerHTML = `<span>${categoria}:</span> <span>${formatter.format(totaisPorCategoria[categoria])}</span>`;                                                                               
         div.appendChild(card);
     }
 

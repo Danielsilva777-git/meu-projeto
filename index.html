@@ -3,42 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle financerio</title>
-    <link rel="stylesheet" href="style03.css">
+    <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="style03.css">         
 </head>
- 
 <body>
-     <div class="container">
-         <div class="controle">
-                <h1>💰 Controle Financeiro</h1>
-             
-                <div class="linha">
-                     <select id="movimentação">
-                         <option value="entrada">💰 Entradas</option>
-                         <option value="saida">💸 Saidas</option>
-                     </select>
-                </div>
+    <div class="container">
 
-               <div class="linha">
-                    <select  id="valores">
-                         <option value="">📂 Aguarde...</option>
-                    </select>
-               </div>
-               <div class="linha"><input type="number" placeholder="💲 0,00" id="input"></div>
+        <!-- Seção do Formulário de Lançamento -->
+        <div class="controle">
+            <h1>💰 Controle Financeiro</h1>
+               
+            <div class="linha">
+                <label for="movimentação">Tipo de Movimentação</label>
+                <select id="movimentação">
+                    <option value="entrada">💰 Entradas</option>
+                    <option value="saida">💸 Saídas</option>
+                </select>
+            </div>
 
-               <div class="botao"><button id="btn-adicionar">Adicionar</button></div>
-        
-          </div>
-         
-         <div class="tela" id="movimentções">
-               <h2>💸 Movimentações</h2>
-               <div class="divs"></div> 
-               <div class="resultado">
-                    
+            <div class="linha">
+                <label for="valores">Categoria</label>
+                <select id="valores">
+                    <option value="" disabled selected>Selecione uma opção</option>
+                </select>
+            </div>
+
+            <div class="linha">
+                <label for="input">Valor (R$)</label>
+                <input type="number" id="input" placeholder="💲 0,00" step="0.01" min="0">
+            </div>
+
+               <div class="botao">
+                    <button id="btn-adicionar">Adicionar</button>
+                     <a href="lancamentos.html" class="link-voltar">📋 Ver lançamentos</a>
                </div>
-          </div>
-     </div>
-            
+        </div>
+
+        <!-- Seção do Histórico e Resultados -->
+        <div class="tela" id="movimentações">
+            <h2>💸 Movimentações</h2>
+            <div class="divs"></div> 
+            <div class="resultado"></div>
+
+        </div>
+ 
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
