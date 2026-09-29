@@ -73,6 +73,8 @@ function addvalores() {
         renderizarTela();
     } else {
         alert("Preencher os campos em branco");
+        input.focus()
+
         return;
     }
 
@@ -83,40 +85,52 @@ function addvalores() {
 // Remonta os cards (agrupados por categoria) e recalcula o saldo total
 function renderizarTela() {
     div.innerHTML = "";
+    if(lancamentos.length === 0){
+        div.innerHTML = `<p class="vazio">Nenhum lançamento ainda 📭</p>`;
+    } else {
+        // pega os últimos 3 itens do array (os mais recentes, já que addvalores
+        // usa .push, que sempre adiciona no FINAL) e inverte a ordem,
+        // pra mostrar o mais novo primeiro
+           const ultimosTres  = lancamentos.slice(-3).reverse();
+           ultimosTres.forEach(lancamentos => {
+                 const sinal = lancamentos.tipo === "entrada" ? "💰" : "💸";
+                 const card = document.createElement('div');
+                 card.className = 'cards'
+                 card.innerHTML = `<span> ${sinal} ${lancamentos.categoria}</span> ${formatter.format(lancamentos.valor)} `
+                 div.appendChild(card);
+           })
+        }
+           const totalEntradas = lancamentos
+           .filter(l => l.tipo ==="entrada")
+           .reduce((soma, l) => soma + l.valor, 0)
+    
+            const totalSaidas = lancamentos
+            .filter(l => l.tipo === "saida")
+             .reduce((soma, l) => soma + l.valor, 0);
 
-    const totaisPorCategoria = {};
-    lancamentos.forEach(({ categoria, valor }) => {
-        if (!totaisPorCategoria[categoria]) totaisPorCategoria[categoria] = 0;
-        totaisPorCategoria[categoria] += valor;
-    });
+            const saldo = totalEntradas - totalSaidas;
 
-    for (let categoria in totaisPorCategoria) {
-        const card = document.createElement('div');
-        card.className = 'cards';
-        card.innerHTML = `<span>${categoria}:</span> <span>${formatter.format(totaisPorCategoria[categoria])}</span>`;                                                                               
-        div.appendChild(card);
-    }
-
-    const totalEntradas = lancamentos
-        .filter(l => l.tipo === "entrada")
-        .reduce((soma, l) => soma + l.valor, 0);
-
-    const totalSaidas = lancamentos
-        .filter(l => l.tipo === "saida")
-        .reduce((soma, l) => soma + l.valor, 0);
-
-    const saldo = totalEntradas - totalSaidas;
+    // Define uma classe diferente dependendo se o saldo é positivo ou negativo,
+    // pra colorir o texto de acordo (verde ou vermelho)
+    const classeSaldo = saldo >= 0 ? 'positivo' : 'negativo';
 
     resultado.innerHTML = `
-        <p>Entradas: ${formatter.format(totalEntradas)}</p>
-        <p>Saídas: ${formatter.format(totalSaidas)}</p>
-        <p><strong>Saldo: ${formatter.format(saldo)}</strong></p>
+        <div class="resumo-item resumo-entrada">
+            <span class="resumo-label">💰 Entradas</span>
+            <span class="resumo-valor">${formatter.format(totalEntradas)}</span>
+        </div>
+        <div class="resumo-item resumo-saida">
+            <span class="resumo-label">💸 Saídas</span>
+            <span class="resumo-valor">${formatter.format(totalSaidas)}</span>
+        </div>
+        <div class="resumo-item resumo-saldo ${classeSaldo}">
+            <span class="resumo-label">📊 Saldo</span>
+            <span class="resumo-valor">${formatter.format(saldo)}</span>
+        </div>
     `;
 }
 
-function remover() {
 
-}
 
 // Inicialização: carrega o JSON e já popula o select de categorias
 // com base no valor padrão do select de movimentação

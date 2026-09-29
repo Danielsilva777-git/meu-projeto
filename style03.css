@@ -164,9 +164,21 @@ h2{
 h2{
   display: none;
 }
+ .container{
+   height: auto; 
+ }
 .tela, .divs{
-    overflow:scroll;
-    height: 90%;
+    overflow-y: auto;
+    max-height: 300px;
+}
+.cards{
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.vazio {
+    text-align: center;
+    color: #888;
+    padding: 20px 0;
 }
 h1{
   font-size: 1.5rem;
@@ -177,6 +189,7 @@ h1{
     display: flex;
     flex-direction: column;
     margin-bottom: 12px; /* Espaçamento entre as linhas */
+    
 }
 
 .linha label {
@@ -269,6 +282,7 @@ h1{
 }
 .info-lacamento {
     word-break: break-word;
+    
 }
 /* Celular / telas pequenas */
 @media (max-width: 768px){
@@ -291,4 +305,73 @@ h1{
     .linha-editando .acoes-lancamento {
         justify-content: flex-end;
     }
+}
+/* ==== Resumo (Entradas / Saídas / Saldo) ==== */
+
+.resultado {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    border-left: 4px solid transparent;
+}
+
+.resumo-label {
+    font-size: 0.95em;
+    color: #666;
+    font-weight: 600;
+}
+
+.resumo-valor {
+    font-size: 1.15em;
+    font-weight: 700;
+}
+
+.resumo-entrada {
+    border-left-color: #2ecc71;
+}
+.resumo-entrada .resumo-valor {
+    color: #27ae60;
+}
+
+.resumo-saida {
+    border-left-color: #e74c3c;
+}
+.resumo-saida .resumo-valor {
+    color: #c0392b;
+}
+
+.resumo-saldo {
+    background: #f7f9ff;
+}
+.resumo-saldo .resumo-label {
+    font-size: 1.05em;
+}
+.resumo-saldo .resumo-valor {
+    font-size: 1.35em;
+}
+
+.resumo-saldo.positivo {
+    border-left-color: #3946b8;
+}
+.resumo-saldo.positivo .resumo-valor {
+    color: #3946b8;
+}
+
+.resumo-saldo.negativo {
+    border-left-color: #e74c3c;
+    background: #fdf2f2;
+}
+.resumo-saldo.negativo .resumo-valor {
+    color: #c0392b;
 }
