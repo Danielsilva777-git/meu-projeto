@@ -68,7 +68,7 @@ function addvalores() {
 
     // obs na criaçao da chave valor, foi criada normal sem abreviação devido ela ser do tipo number
     if (valorInput !== 0 && categoria !== "" && !isNaN(valorInput)) {
-        lancamentos.push({ tipo, categoria, valor: valorInput });
+        lancamentos.push({ tipo, categoria, valor: valorInput, id: Date.now() + Math.random() });
          salvarDados(); // salvar sempre que adicionar 
         renderizarTela();
     } else {

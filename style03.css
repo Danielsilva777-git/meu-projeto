@@ -258,3 +258,37 @@ h1{
 .btn-acao:hover {
     transform: scale(1.1);
 }
+/* ==== Responsividade da página de Lançamentos ==== */
+
+/* Desktop: os campos da edição dividem o espaço da linha igualmente */
+.linha-editando select,
+.linha-editando input {
+ width: auto;
+ flex: 1;
+ min-width: 0;
+}
+.info-lacamento {
+    word-break: break-word;
+}
+/* Celular / telas pequenas */
+@media (max-width: 768px){
+    .pagina-lancamentos {
+        height: auto;
+    }
+    .linha-topo {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .linha-editando{
+        flex-direction: column;
+        align-items:stretch;
+    }
+    .linha-editando select , 
+    .linha-editando input  {
+        width: 100%;
+        flex: none;
+    }
+    .linha-editando .acoes-lancamento {
+        justify-content: flex-end;
+    }
+}
