@@ -12,6 +12,11 @@
     "Internet",
     "Cartão de crédito",
     "Mercado",
-    "Combustível"
+    "Combustível",
+    "Luz",
+    "Lazer",
+    "Saúde",
+    "Higiene",
+    "Outros"
   ]
 }

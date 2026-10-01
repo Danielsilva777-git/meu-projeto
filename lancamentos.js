@@ -60,8 +60,14 @@ function criarLinhaVisualizacao(lancamento) {
 
     const sinal = lancamento.tipo === "entrada" ? "💰" : "💸";
 
+    // Lançamentos criados antes do campo "data" existir não têm esse valor;
+    // nesse caso mostramos um aviso em vez de "Invalid Date".
+    const data = lancamento.data
+        ? new Date(lancamento.data).toLocaleString("pt-BR")
+        : "Data não registrada";
+
     linha.innerHTML = `
-        <span class="info-lancamento">${sinal} ${lancamento.categoria} — ${formatter.format(lancamento.valor)}</span>
+        <span class="info-lancamento">${sinal} ${lancamento.categoria} — ${formatter.format(lancamento.valor)} — ${data}</span>
         <div class="acoes-lancamento">
             <button class="btn-acao btn-alterar" title="Alterar">✏️</button>
             <button class="btn-acao btn-excluir" title="Excluir">🗑️</button>
@@ -151,6 +157,7 @@ function criarFormularioEdicao(lancamento) {
         alvo.tipo = novoTipo;
         alvo.categoria = novaCategoria;
         alvo.valor = novoValor;
+        alvo.data = new Date().toISOString(); // atualiza para a data/hora da edição
 
         idEmEdicao = null;
         salvarLancamentos();

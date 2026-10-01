@@ -13,7 +13,6 @@ movimentaçao.addEventListener('change', () => {
     valor_selecionado(valor);
 });
 
-
 btn_add.addEventListener('click', addvalores);
 
 let categorias = {};
@@ -26,7 +25,7 @@ async function json() {
         }
         const dados = await resposta.json();
         categorias = dados;
-        
+
     } catch (erro) {
         console.log(`Arquivo json não encontrado ${erro}`);
     }
@@ -44,37 +43,41 @@ function valor_selecionado(valor) {
     });
 }
 
-// Lista de lançamentos: guarda categoria, valor E o tipo (entrada/saida)
-// -> isso é o que faltava para dar pra calcular o saldo depois
+// Lista de lançamentos: guarda categoria, valor, tipo, id e data
 let lancamentos = [];
 
 // salvar o array de lançamentos no localStorage
-function salvarDados(){
-  localStorage.setItem('lancamentos', JSON.stringify(lancamentos));
+function salvarDados() {
+    localStorage.setItem('lancamentos', JSON.stringify(lancamentos));
 }
 
 // Lê o localStorage e recupera os lançamentos salvos
-function carregarDados(){
-  const dadosSalvos = localStorage.getItem('lancamentos');
-  if(dadosSalvos){
-    lancamentos = JSON.parse(dadosSalvos);
-  }
+function carregarDados() {
+    const dadosSalvos = localStorage.getItem('lancamentos');
+    if (dadosSalvos) {
+        lancamentos = JSON.parse(dadosSalvos);
+    }
 }
 
 function addvalores() {
     const tipo = movimentaçao.value;       // "entrada" ou "saida"
     const categoria = rendas_gastos.value;
     const valorInput = Number(input.value);
+    const data = new Date().toISOString(); // data/hora de criação do lançamento
 
     // obs na criaçao da chave valor, foi criada normal sem abreviação devido ela ser do tipo number
     if (valorInput !== 0 && categoria !== "" && !isNaN(valorInput)) {
-        lancamentos.push({ tipo, categoria, valor: valorInput, id: Date.now() + Math.random() });
-         salvarDados(); // salvar sempre que adicionar 
+        lancamentos.push({
+            tipo,
+            categoria,
+            valor: valorInput,
+            id: Date.now() + Math.random(), // identificador único de cada lançamento
+            data
+        });
+        salvarDados(); // salvar sempre que adicionar
         renderizarTela();
     } else {
         alert("Preencher os campos em branco");
-        input.focus()
-
         return;
     }
 
@@ -82,33 +85,43 @@ function addvalores() {
     input.focus();
 }
 
-// Remonta os cards (agrupados por categoria) e recalcula o saldo total
+// Remonta os últimos 3 lançamentos e recalcula entradas, saídas e saldo
 function renderizarTela() {
     div.innerHTML = "";
-    if(lancamentos.length === 0){
+
+    if (lancamentos.length === 0) {
         div.innerHTML = `<p class="vazio">Nenhum lançamento ainda 📭</p>`;
     } else {
         // pega os últimos 3 itens do array (os mais recentes, já que addvalores
         // usa .push, que sempre adiciona no FINAL) e inverte a ordem,
         // pra mostrar o mais novo primeiro
-           const ultimosTres  = lancamentos.slice(-3).reverse();
-           ultimosTres.forEach(lancamentos => {
-                 const sinal = lancamentos.tipo === "entrada" ? "💰" : "💸";
-                 const card = document.createElement('div');
-                 card.className = 'cards'
-                 card.innerHTML = `<span> ${sinal} ${lancamentos.categoria}</span> ${formatter.format(lancamentos.valor)} `
-                 div.appendChild(card);
-           })
-        }
-           const totalEntradas = lancamentos
-           .filter(l => l.tipo ==="entrada")
-           .reduce((soma, l) => soma + l.valor, 0)
-    
-            const totalSaidas = lancamentos
-            .filter(l => l.tipo === "saida")
-             .reduce((soma, l) => soma + l.valor, 0);
+        const ultimosTres = lancamentos.slice(-3).reverse();
 
-            const saldo = totalEntradas - totalSaidas;
+        ultimosTres.forEach(lancamento => {
+            const sinal = lancamento.tipo === "entrada" ? "💰" : "💸";
+            const card = document.createElement('div');
+            card.className = 'cards';
+            card.innerHTML = `<span>${sinal} ${lancamento.categoria}</span> <span>${formatter.format(lancamento.valor)}</span>`;
+            div.appendChild(card);
+        });
+
+        const linkVerTodos = document.createElement('a');
+        linkVerTodos.href = 'lancamentos.html';
+        linkVerTodos.className = 'link-voltar link-ver-todos';
+        linkVerTodos.textContent = 'Ver todos os lançamentos →';
+        div.appendChild(linkVerTodos);
+    }
+
+    // Saldo geral: continua somando TODOS os lançamentos, não só os 3 exibidos
+    const totalEntradas = lancamentos
+        .filter(l => l.tipo === "entrada")
+        .reduce((soma, l) => soma + l.valor, 0);
+
+    const totalSaidas = lancamentos
+        .filter(l => l.tipo === "saida")
+        .reduce((soma, l) => soma + l.valor, 0);
+
+    const saldo = totalEntradas - totalSaidas;
 
     // Define uma classe diferente dependendo se o saldo é positivo ou negativo,
     // pra colorir o texto de acordo (verde ou vermelho)
@@ -130,7 +143,9 @@ function renderizarTela() {
     `;
 }
 
+function remover() {
 
+}
 
 // Inicialização: carrega o JSON e já popula o select de categorias
 // com base no valor padrão do select de movimentação
@@ -138,6 +153,6 @@ function renderizarTela() {
     await json();
     valor_selecionado(movimentaçao.value);
     carregarDados(); // recupera lançamentos salvos
-    renderizarTela(); // Já mostra os cards e o saldo ao abrir 
+    renderizarTela(); // Já mostra os cards e o saldo ao abrir
 
 })();
