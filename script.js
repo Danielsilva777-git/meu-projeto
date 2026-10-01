@@ -105,11 +105,7 @@ function renderizarTela() {
             div.appendChild(card);
         });
 
-        const linkVerTodos = document.createElement('a');
-        linkVerTodos.href = 'lancamentos.html';
-        linkVerTodos.className = 'link-voltar link-ver-todos';
-        linkVerTodos.textContent = 'Ver todos os lançamentos →';
-        div.appendChild(linkVerTodos);
+       
     }
 
     // Saldo geral: continua somando TODOS os lançamentos, não só os 3 exibidos
