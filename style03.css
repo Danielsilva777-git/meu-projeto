@@ -233,6 +233,7 @@ h1{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     background: #f8f8f860;
     padding: 10px 14px;
     border-radius: 10px;
@@ -240,6 +241,22 @@ h1{
     box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
 }
 
+.info-lancamento {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;   /* permite que o texto encolha/quebre dentro do flex */
+}
+
+.info-principal {
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.info-data {
+    font-size: 0.8em;
+    color: #888;
+}
 .linha-editando {
     gap: 8px;
     background: #eef1ff;
@@ -296,6 +313,10 @@ h1{
     .linha-editando{
         flex-direction: column;
         align-items:stretch;
+        gap: 8px;
+    }
+    .acoes-lancamento{
+        justify-content: flex-end;
     }
     .linha-editando select , 
     .linha-editando input  {

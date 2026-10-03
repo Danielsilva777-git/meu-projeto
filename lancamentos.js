@@ -67,7 +67,10 @@ function criarLinhaVisualizacao(lancamento) {
         : "Data não registrada";
 
     linha.innerHTML = `
-        <span class="info-lancamento">${sinal} ${lancamento.categoria} — ${formatter.format(lancamento.valor)} — ${data}</span>
+        <div class="info-lancamento">
+            <span class="info-principal">${sinal} ${lancamento.categoria} — ${formatter.format(lancamento.valor)}</span>
+            <span class="info-data">${data}</span>
+        </div>
         <div class="acoes-lancamento">
             <button class="btn-acao btn-alterar" title="Alterar">✏️</button>
             <button class="btn-acao btn-excluir" title="Excluir">🗑️</button>

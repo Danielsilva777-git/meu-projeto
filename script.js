@@ -103,7 +103,7 @@ function renderizarTela() {
             card.className = 'cards';
             card.innerHTML = `<span>${sinal} ${lancamento.categoria}</span> <span>${formatter.format(lancamento.valor)}</span>`;
             div.appendChild(card);
-        });
+      });
 
        
     }
@@ -139,9 +139,6 @@ function renderizarTela() {
     `;
 }
 
-function remover() {
-
-}
 
 // Inicialização: carrega o JSON e já popula o select de categorias
 // com base no valor padrão do select de movimentação
