@@ -4,7 +4,7 @@
 
     body {
         font-family: "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(135deg, #6198cf, #3946b8);
+        background: linear-gradient(135deg, #6198cf, #39b88e);
         margin: 0;
         padding: 0;
         display: flex;
@@ -25,7 +25,7 @@
     }
 
 .controle, .tela{
-    background: #fff;
+    background: #ffffff;
     padding: 25px;
     flex: 1;
     min-width: 300px;
@@ -152,6 +152,8 @@ h2{
 @media(max-width: 768px) {
     .container {
         flex-direction: column;
+        
+
     }
     .controle {
         border-right: none;
@@ -167,7 +169,7 @@ h2{
  .container{
    height: auto; 
  }
-.tela, .divs{
+ .divs{
     overflow-y: auto;
     max-height: 300px;
 }
@@ -303,9 +305,7 @@ h1{
 }
 /* Celular / telas pequenas */
 @media (max-width: 768px){
-    .pagina-lancamentos {
-        height: auto;
-    }
+    
     .linha-topo {
         flex-wrap: wrap;
         gap: 10px;
@@ -396,3 +396,32 @@ h1{
 .resumo-saldo.negativo .resumo-valor {
     color: #c0392b;
 }
+/* Vale para qualquer tamanho de tela: a lista sempre preenche
+   o espaço vertical disponível dentro do card */
+.pagina-lancamentos {
+    display: flex;
+    flex-direction: column;
+}
+
+.pagina-lancamentos .tela {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+#lista-lancamentos {
+    flex: 1;
+    max-height: none;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* Só no celular: o card inteiro também cresce para ocupar quase a tela,
+   já que no computador o .container já tem altura fixa de 650px */
+@media (max-width: 768px) {
+    .pagina-lancamentos {
+      height: 90vh;
+      overflow-y: auto;
+    }
+}   
